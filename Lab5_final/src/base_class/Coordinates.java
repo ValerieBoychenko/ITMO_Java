@@ -1,7 +1,5 @@
 package base_class;
 
-import exception.NullException;
-import exception.RangeException;
 import org.json.simple.JSONObject;
 
 import java.util.Objects;
@@ -17,8 +15,6 @@ public class Coordinates {
      * Конструктор для создания объекта base_class.Coordinates.
      * @param x координата x
      * @param y координата y
-     * @throws NullException если x или y равны null
-     * @throws RangeException если значение x находится вне допустимого диапазона
      */
     public Coordinates(Float x, Integer y){
         if (x < 71) {
