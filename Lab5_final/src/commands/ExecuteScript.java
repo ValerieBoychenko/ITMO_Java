@@ -2,6 +2,7 @@ package commands;
 
 import exception.CommandException;
 import exception.ConsoleOutputErrorException;
+import handlers.Parser;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -24,56 +25,9 @@ public class ExecuteScript extends Command {
         String fileName = in.nextLine();
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String command;
+            Parser  parser= new Parser(fileName);
             while ((command = br.readLine()) != null) {
-                switch (command.split(" ")[0]) {
-                    case "help":
-                        new Help().help();
-                        break;
-                    case "info":
-                        new Info().info();
-                        break;
-                    case "show":
-                        new Show().show();
-                        break;
-                    case "insert":
-                        new InsertNewElement().insertNewElement();
-                        break;
-                    case "update":
-                        new Update().update();
-                        break;
-                    case "remove_key":
-                        new RemoveKey().remove();
-                        break;
-                    case "clear":
-                        new Clear().clear();
-                        break;
-                    case "save":
-                        new Save().save();
-                        break;
-                    case "execute_script":
-                        new ExecuteScript().executeScript();
-                        break;
-                    case "exit":
-                        break;
-                    case "remove_greater":
-                        new RemoveGreater().removeGreater();
-                        break;
-                    case "replace_if_greater":
-                        new ReplaceIfGreater().replaceIfGreater();
-                        break;
-                    case "remove_lower_key":
-                        new RemoveLowerKey().removeLowerKey();
-                        break;
-                    case "count_less_than_genre":
-                        new CountLessThanGenre().countLessThanGenre();
-                        break;
-                    case "filter_starts_with_name":
-                        new FilterStartsWithName().filterStartsWithName();
-                        break;
-                    case "print_field_descending_genre":
-                        new PrintFieldDescendingGenre().printFieldDescendingGenre();
-                        break;
-                }
+                parser.parsing(command);
             }
         } catch (IOException | ConsoleOutputErrorException | NullPointerException e) {
             e.getMessage();

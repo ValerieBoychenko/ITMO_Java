@@ -9,8 +9,8 @@ import java.util.TreeMap;
  * Класс, представляющий коллекцию музыкальных групп и управляющий ею.
  */
 public class MusicBandCollection {
-    private TreeMap<Integer, MusicBand> musicBands;// Коллекция музыкальных групп
-    private final Date initializationDate; // Дата создания класса
+    private TreeMap<Integer, MusicBand> musicBands;
+    private final Date initializationDate;
 
     /**
      * Конструктор по умолчанию, инициализирующий пустую коллекцию музыкальных групп.

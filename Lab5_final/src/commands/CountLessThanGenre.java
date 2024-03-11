@@ -1,13 +1,11 @@
 package commands;
 
 import base_class.MusicBand;
-import handlers.Converter;
+import base_class.MusicGenre;
 
 import java.util.Date;
 import java.util.InputMismatchException;
-import java.util.Scanner;
-
-import java.util.InputMismatchException;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -31,7 +29,7 @@ public class CountLessThanGenre extends Command {
                 throw new NullPointerException("MusicBands is not initialized.\n" + this.toString());
             }
             for (MusicBand band : musicBands.getMusicBands().values()) {
-                if (band.getGenre().compareTo(new Converter().convert(genre)) < 0) {
+                if (band.getGenre().compareTo(Objects.requireNonNull(MusicGenre.convert(genre))) < 0) {
                     count++;
                 }
             }

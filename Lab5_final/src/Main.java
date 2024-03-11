@@ -8,6 +8,5 @@ public class Main {
         Map<String, String> env = System.getenv();
         var parser = new handlers.Parser(env.get("FILE_PATH"));
         parser.start();
-
     }
 }

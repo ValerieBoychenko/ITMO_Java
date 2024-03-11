@@ -8,8 +8,8 @@ import java.util.Objects;
  * Класс, представляющий координаты.
  */
 public class Coordinates {
-    private Float x; // Координата x
-    private Integer y; // Координата y
+    private Float x;
+    private Integer y;
 
     /**
      * Конструктор для создания объекта base_class.Coordinates.

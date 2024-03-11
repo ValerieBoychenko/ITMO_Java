@@ -1,6 +1,7 @@
-package commands;
+package workingWithFile;
 
 import base_class.MusicBand;
+import commands.Command;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -12,7 +13,7 @@ import java.util.Date;
 /**
  * Команда для записи данных о музыкальных группах в файл в формате JSON.
  */
-public class Writer extends Command{
+public class Writer{
     /**
      * Метод для записи данных о музыкальных группах в файл в формате JSON.
      * Создает JSON-массив и заполняет его JSON-объектами, представляющими музыкальные группы.
@@ -33,7 +34,7 @@ public class Writer extends Command{
     }
     public JSONArray parsingData(){
         JSONArray jsonArray = new JSONArray();
-        for (MusicBand band : musicBands.getMusicBands().values()) {
+        for (MusicBand band : Command.musicBands.getMusicBands().values()) {
             JSONObject bandObj = new JSONObject();
             bandObj.put("id", band.getId());
             bandObj.put("name", band.getName());

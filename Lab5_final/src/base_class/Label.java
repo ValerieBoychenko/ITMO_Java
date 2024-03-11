@@ -8,7 +8,7 @@ import java.util.Objects;
  * Класс, представляющий музыкальный лейбл.
  */
 public class Label {
-    private Long bands; // Количество групп в лейбле
+    private Long bands;
 
     /**
      * Конструктор для создания объекта base_class.Label с указанием количества групп.

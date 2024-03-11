@@ -1,7 +1,5 @@
 package base_class;
 
-import handlers.Converter;
-
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,15 +12,15 @@ import java.util.Scanner;
  * Класс, представляющий музыкальную группу.
  */
 public class MusicBand implements Comparable<MusicBand>, Serializable {
-    private Long id; // Уникальный идентификатор группы
-    private String name; // Название группы
-    private Coordinates coordinates; // Координаты местоположения группы
-    private ZonedDateTime creationDate; // Дата и время создания записи о группе
-    private int numberOfParticipants; // Количество участников группы
-    private long albumsCount; // Количество альбомов группы
-    private Date establishmentDate; // Дата создания группы
-    private MusicGenre genre; // Музыкальный жанр группы
-    private Label label; // Лейбл, к которому принадлежит группа
+    private Long id;
+    private String name;
+    private Coordinates coordinates;
+    private ZonedDateTime creationDate;
+    private int numberOfParticipants;
+    private long albumsCount;
+    private Date establishmentDate;
+    private MusicGenre genre;
+    private Label label;
 
     /**
      * Конструктор для создания объекта base_class.MusicBand.
@@ -156,7 +154,7 @@ public class MusicBand implements Comparable<MusicBand>, Serializable {
         Long bands = in.nextLong();
         var label = new Label(bands);
 
-        return new MusicBand(name, coordinates, numberOfParticipants, albumsCount, establishmentDate, new Converter().convert(genre), label);
+        return new MusicBand(name, coordinates, numberOfParticipants, albumsCount, establishmentDate, MusicGenre.convert(genre), label);
     }
     /**
      * Возвращает название группы.

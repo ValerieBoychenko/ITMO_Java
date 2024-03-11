@@ -16,7 +16,6 @@ public class Help extends Command {
      */
     public void help() throws ConsoleOutputErrorException {
         try {
-            // Вывод справочной информации о командах {
             System.out.println("help - output help for available commands");
             System.out.println("info - output information about the collection (type, initialization date, number of items, etc.) to the standard output stream.");
             System.out.println("show - output all the elements of the collection in a string representation to the standard output stream");
@@ -34,14 +33,12 @@ public class Help extends Command {
             System.out.println("filter_starts_with_name name - print the elements whose name field value starts with the specified substring");
             System.out.println("print_field_descending_genre - print the values of the genre field of all elements in descending order");
         } catch (Exception e) {
-            // Если произошла ошибка, выбрасываем исключение
             throw new ConsoleOutputErrorException("Ошибка вывода данных в консоль" + this.toString());
         }
     }
 
     @Override
     public String toString(){
-        // Возвращаем строковое представление класса с указанием времени
         return "Имя класса: Help" + " - / " + new Date().toString() + " /";
     }
 }

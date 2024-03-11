@@ -16,7 +16,6 @@ public class Info extends Command {
         if (musicBands == null) {
             throw new NullPointerException("musicBands is not initialized.\n" + this.toString());
         }
-        // Вывод информации о коллекции
         System.out.println("Информация о коллекции музыкальных групп:");
         System.out.println("Тип коллекции: TreeMap<String, base_class.MusicBand>");
         System.out.println("Дата инициализации: " + musicBands.getInitializationDate());
@@ -25,7 +24,6 @@ public class Info extends Command {
 
     @Override
     public String toString(){
-        // Возвращаем строковое представление класса с указанием времени
         return "Имя класса: Info" + " - / " + new Date().toString() + " /";
     }
 

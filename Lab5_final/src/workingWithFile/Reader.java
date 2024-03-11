@@ -1,9 +1,10 @@
-package commands;
+package workingWithFile;
 
 import base_class.Coordinates;
 import base_class.Label;
 import base_class.MusicBand;
 import base_class.MusicGenre;
+import commands.Command;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -16,14 +17,14 @@ import java.util.Random;
 /**
  * Команда для чтения данных о музыкальных группах из файла JSON и добавления их в коллекцию.
  */
-public class Reader extends Command {
+public class Reader {
     /**
      * Метод для чтения данных о музыкальных группах из файла JSON и добавления их в коллекцию.
      *
      * @param fileName имя файла, из которого будут считываться данные
      */
     public void read(String fileName) {
-        var newMusicBands = musicBands.getMusicBands();
+        var newMusicBands = Command.musicBands.getMusicBands();
         JSONParser parser = new JSONParser();
 
         try {
@@ -54,7 +55,7 @@ public class Reader extends Command {
                 MusicBand musicBand = new MusicBand(name, coordinates, numberOfParticipants, albumsCount, establishmentDate, genre, label);
 
                 newMusicBands.put(key, musicBand);
-                musicBands.updateCollection(newMusicBands);
+                Command.musicBands.updateCollection(newMusicBands);
             }
 
         } catch (Exception e) {
