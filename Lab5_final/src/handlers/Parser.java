@@ -2,8 +2,7 @@ package handlers;
 
 import commands.*;
 import exception.ConsoleOutputErrorException;
-import workingWithFile.Reader;
-import workingWithFile.Writer;
+import workingWithFile.FileReader;
 
 import java.util.Scanner;
 /**
@@ -30,6 +29,7 @@ public class Parser {
      * выводит сообщение об ошибке в консоль.
      */
     public void start(){
+        new FileReader().read(fileName);
         while (flag) {
             try {
                 System.out.println("Enter the command: \n");
@@ -92,11 +92,6 @@ public class Parser {
             case "print_field_descending_genre":
                 new PrintFieldDescendingGenre().printFieldDescendingGenre();
                 break;
-            case "read":
-                new Reader().read(fileName);
-                break;
-            case "write":
-                new Writer().writing(fileName);
         }
     }
 }

@@ -19,6 +19,9 @@ public class Show extends Command {
         if (bands == null) {
             throw new NullPointerException("Bands is not initialized.\n" + this.toString());
         }
+        if (musicBands.getMusicBands().isEmpty()){
+            System.out.println("The collection is empty!");
+        }
         for (Integer key : bands.keySet()) {
             if (key == null){
                 throw new NullPointerException("Key is null.\n" + this.toString());

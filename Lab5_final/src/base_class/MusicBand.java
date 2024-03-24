@@ -3,10 +3,8 @@ package base_class;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Objects;
-import java.util.Random;
-import java.util.Scanner;
+import java.time.format.DateTimeParseException;
+import java.util.*;
 
 /**
  * Класс, представляющий музыкальную группу.
@@ -35,11 +33,11 @@ public class MusicBand implements Comparable<MusicBand>, Serializable {
      * @throws NullPointerException     если один из аргументов равен null
      * @throws IllegalArgumentException если количество участников или количество альбомов меньше или равно 0
      */
-    public MusicBand(String name, Coordinates coordinates, int numberOfParticipants, long albumsCount, java.util.Date establishmentDate, MusicGenre genre, Label label) {
+    public MusicBand(String name, Coordinates coordinates, ZonedDateTime creationDate, int numberOfParticipants, long albumsCount, java.util.Date establishmentDate, MusicGenre genre, Label label) {
         this.id = new Random().nextLong();
         this.name = Objects.requireNonNull(name, "Field cannot be null");
         this.coordinates = Objects.requireNonNull(coordinates, "Field cannot be null");
-        this.creationDate = Objects.requireNonNull(ZonedDateTime.now(), "Error");
+        this.creationDate = Objects.requireNonNull(creationDate, "Error");
         this.numberOfParticipants = checkPositive(numberOfParticipants);
         this.albumsCount = checkPositive(albumsCount);
         this.establishmentDate = Objects.requireNonNull(establishmentDate, "Field cannot be null");
@@ -128,34 +126,120 @@ public class MusicBand implements Comparable<MusicBand>, Serializable {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter new element:");
 
-        System.out.println("----- Enter name: ");
-        String name = in.nextLine();
+        String name = "";
+        while (name.isEmpty()) {
+            System.out.println("----- Enter name: ");
+            name = in.nextLine().trim();
+            if (name.isEmpty()) {
+                System.out.println("Name cannot be empty. Please enter a valid name.");
+            }
+        }
 
-        System.out.println("----- Enter Coordinates: ");
-        Float x = in.nextFloat();
-        Integer y = in.nextInt();
+        Float x = 0.0f;
+        Integer y = 0;
+        boolean validCoordinates = false;
+        while (!validCoordinates) {
+            System.out.println("----- Enter Coordinates (x y): ");
+            try {
+                x = in.nextFloat();
+                y = in.nextInt();
+                in.nextLine();
+                validCoordinates = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input format. Coordinates must be numbers.");
+                in.nextLine();
+            }
+        }
         var coordinates = new Coordinates(x, y);
 
-        System.out.println("----- Enter numberOfParticipants: ");
-        int numberOfParticipants = in.nextInt();
+        int numberOfParticipants = 0;
+        while (numberOfParticipants <= 0) {
+            System.out.println("----- Enter numberOfParticipants: ");
+            try {
+                numberOfParticipants = in.nextInt();
+                if (numberOfParticipants <= 0) {
+                    System.out.println("Number of participants must be greater than 0.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input format. Please enter a valid integer.");
+                in.nextLine();
+            }
+        }
 
-        System.out.println("----- Enter albumsCount: ");
-        long albumsCount = in.nextLong();
+        ZonedDateTime creationDate = null;
+        while (creationDate == null) {
+            try {
+                Scanner console = new Scanner(System.in);
+                System.out.println("----- Enter establishmentDate (EEE MMM dd HH:mm:ss zzz yyyy): ");
+                String establishmentDateString = console.nextLine();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
+                creationDate = ZonedDateTime.parse(establishmentDateString, formatter);
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format. Please enter the date in the format: EEE MMM dd HH:mm:ss zzz yyyy");
+            }
+        }
 
-        System.out.println("----- Enter establishmentDate: ");
-        String establishmentDateString = in.nextLine();
-        ZonedDateTime zonedDateTime = ZonedDateTime.parse(establishmentDateString, DateTimeFormatter.ISO_DATE_TIME);
-        Date establishmentDate = Date.from(zonedDateTime.toInstant());
+        long albumsCount = 0;
+        while (albumsCount <= 0) {
+            System.out.println("----- Enter albumsCount: ");
+            try {
+                albumsCount = in.nextLong();
+                if (albumsCount <= 0) {
+                    System.out.println("Albums count must be greater than 0.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input format. Please enter a valid integer.");
+                in.nextLine(); // clear buffer
+            }
+        }
 
-        System.out.println("----- Enter genre: ");
-        String genre = in.nextLine();
+        Date establishmentDate = null;
+        while (establishmentDate == null) {
+            try {
+                Scanner console = new Scanner(System.in);
+                System.out.println("----- Enter establishmentDate (EEE MMM dd HH:mm:ss zzz yyyy): ");
+                String establishmentDateString = console.nextLine();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
+                ZonedDateTime zonedDateTime = ZonedDateTime.parse(establishmentDateString, formatter);
+                establishmentDate = Date.from(zonedDateTime.toInstant());
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format. Please enter the date in the format: EEE MMM dd HH:mm:ss zzz yyyy");
+            }
+        }
 
-        System.out.println("----- Enter label: ");
-        Long bands = in.nextLong();
-        var label = new Label(bands);
+        String genre = "";
+        while (genre.isEmpty()) {
+            Scanner consoleOne = new Scanner(System.in);
+            System.out.println("Choose a genre" + "\n" +
+                    "ROCK" + "\n" +
+                    "BLUES" + "\n" +
+                    "POP" + "\n" +
+                    "POST_ROCK" + "\n" +
+                    "BRIT_POP");
+            System.out.println("----- Enter genre: ");
+            genre = consoleOne.nextLine();
+            if (genre.isEmpty()) {
+                System.out.println("Genre cannot be empty. Please enter a valid genre.");
+            }
+        }
 
-        return new MusicBand(name, coordinates, numberOfParticipants, albumsCount, establishmentDate, MusicGenre.convert(genre), label);
-    }
+        long bands = 0;
+        while (bands <= 0) {
+            Scanner consoleTwo = new Scanner(System.in);
+            System.out.println("----- Enter label: ");
+            try {
+                bands = consoleTwo.nextLong();
+                if (bands <= 0) {
+                    System.out.println("Number of bands in the label must be greater than 0.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input format. Please enter a valid integer.");
+                in.nextLine();
+            }
+        }
+
+        return new MusicBand(name, coordinates, creationDate, numberOfParticipants, albumsCount, establishmentDate, MusicGenre.convert(genre), new Label(bands));
+        }
     /**
      * Возвращает название группы.
      *

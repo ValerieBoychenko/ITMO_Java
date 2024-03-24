@@ -22,9 +22,7 @@ public class Update extends Command {
      */
     public void update() {
         try {
-            System.out.println("Enter key: ");
-            Scanner in = new Scanner(System.in);
-            Integer key = in.nextInt();
+            int key = CheckCorrectKey.checking();
             var newMusicBand = new MusicBand().createNewMusicBand();
             if (newMusicBand == null) {
                 throw new NullPointerException("newMusicBand is not initialized.\n" + this.toString());

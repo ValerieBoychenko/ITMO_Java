@@ -15,11 +15,16 @@ public class RemoveKey extends Command {
      * @throws ClassCastException если происходит попытка приведения типов
      */
     public void remove() {
+        System.out.println("Keys: ");
         try {
-            System.out.println("Enter key: ");
-            Scanner in = new Scanner(System.in);
-            Integer key = in.nextInt();
+            for (Integer key : musicBands.getMusicBands().keySet()){
+                System.out.println("Name: " + musicBands.getMusicBands().get(key).getName() + " -> "  + key);
+            }
+            int key = CheckCorrectKey.checking();
             musicBands.remove(key);
+            for (Integer newKey : musicBands.getMusicBands().keySet()){
+                System.out.println("Name: " + musicBands.getMusicBands().get(newKey).getName() + " -> "  + newKey);
+            }
         } catch (ClassCastException e) {
             System.out.println("Key not exist");
         } catch (InputMismatchException e) {

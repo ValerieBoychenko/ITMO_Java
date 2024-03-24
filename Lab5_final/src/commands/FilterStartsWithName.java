@@ -18,24 +18,30 @@ public class FilterStartsWithName extends Command {
             System.out.println("Enter name: ");
             Scanner in = new Scanner(System.in);
             String name = in.nextLine();
-            List<MusicBand> filteredBands = new ArrayList<>();
-            if (musicBands == null) {
-                throw new NullPointerException("MusicBands is not initialized.\n" + this.toString());
-            }
-            for (MusicBand band : musicBands.getMusicBands().values()) {
-                if (band.getName().startsWith(name)) {
-                    filteredBands.add(band);
+            while (!Objects.equals(name, "1")) {
+                List<MusicBand> filteredBands = new ArrayList<>();
+                if (musicBands == null) {
+                    throw new NullPointerException("MusicBands is not initialized.\n" + this);
+                }
+                for (MusicBand band : musicBands.getMusicBands().values()) {
+                    if (band.getName().startsWith(name)) {
+                        filteredBands.add(band);
+                    }
+                }
+                if (filteredBands.isEmpty()) {
+                    System.out.println("There are no such groups.");
+                    System.out.println("If you want to complete the search, enter \"1\"");
+                    name = in.nextLine();
+                }else {
+                    for (MusicBand band : filteredBands) {
+                        System.out.println(band.toString());
+                    }
+                    break;
                 }
             }
-            if (filteredBands == null) {
-                throw new NullPointerException("MusicBands is not initialized.\n" + this.toString());
+            } catch(InputMismatchException e){
+                System.out.println("The name was entered incorrectly!");
             }
-            for (MusicBand band : filteredBands) {
-                System.out.println(band.toString());
-            }
-        } catch (InputMismatchException e) {
-            System.out.println("The name was entered incorrectly!");
-        }
     }
 
     /**

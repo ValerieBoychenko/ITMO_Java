@@ -12,12 +12,15 @@ import org.json.simple.parser.JSONParser;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 /**
  * Команда для чтения данных о музыкальных группах из файла JSON и добавления их в коллекцию.
  */
-public class Reader {
+public class FileReader {
     /**
      * Метод для чтения данных о музыкальных группах из файла JSON и добавления их в коллекцию.
      *
@@ -48,11 +51,13 @@ public class Reader {
                 JSONObject labelObj = (JSONObject) bandObj.get("label");
                 long labelBands = ((Number) labelObj.get("bands")).longValue();
                 Coordinates coordinates = new Coordinates(x, y);
-                java.time.ZonedDateTime creationDate = java.time.ZonedDateTime.parse(creationDateString);
-                java.util.Date establishmentDate = java.util.Date.from(java.time.ZonedDateTime.parse(establishmentDateString).toInstant());
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
+                java.time.ZonedDateTime creationDate = ZonedDateTime.parse(creationDateString);
+                ZonedDateTime zonedDateTime = ZonedDateTime.parse(establishmentDateString, formatter);
+                Date establishmentDate = Date.from(zonedDateTime.toInstant());
                 MusicGenre genre = MusicGenre.valueOf(genreString.toUpperCase());
                 Label label = new Label(labelBands);
-                MusicBand musicBand = new MusicBand(name, coordinates, numberOfParticipants, albumsCount, establishmentDate, genre, label);
+                MusicBand musicBand = new MusicBand(name, coordinates, creationDate, numberOfParticipants, albumsCount, establishmentDate, genre, label);
 
                 newMusicBands.put(key, musicBand);
                 Command.musicBands.updateCollection(newMusicBands);

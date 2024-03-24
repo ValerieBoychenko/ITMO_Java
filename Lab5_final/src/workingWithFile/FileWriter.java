@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * Команда для записи данных о музыкальных группах в файл в формате JSON.
  */
-public class Writer{
+public class FileWriter {
     /**
      * Метод для записи данных о музыкальных группах в файл в формате JSON.
      * Создает JSON-массив и заполняет его JSON-объектами, представляющими музыкальные группы.
@@ -23,7 +23,7 @@ public class Writer{
      *
      * @param fileName имя файла, в который будут записаны данные
      */
-    public void writing( String fileName){
+    public void writing(String fileName){
         try (PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(fileName), "UTF-8"))) {
             writer.write(parsingData().toJSONString());
             System.out.println("Данные успешно записаны в файл " + fileName);

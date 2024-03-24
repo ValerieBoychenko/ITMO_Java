@@ -19,6 +19,7 @@ public class Clear extends Command {
             throw new NullPointerException("MusicBands is not initialized.\n" + this.toString());
         }
         musicBands.updateCollection(new TreeMap<>());
+        System.out.println("The collection has been successfully cleared.");
     }
 
     /**

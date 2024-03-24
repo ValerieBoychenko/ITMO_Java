@@ -19,10 +19,11 @@ public class RemoveGreater extends Command {
      */
     public void removeGreater() throws NullPointerException {
         try {
+            for (Integer key : musicBands.getMusicBands().keySet()){
+                System.out.println("Name: " + musicBands.getMusicBands().get(key).getName() + " -> "  + key);
+            }
             TreeMap<Integer, MusicBand> newMusicBands = musicBands.getMusicBands();
-            System.out.println("Enter key: ");
-            Scanner in = new Scanner(System.in);
-            Integer key = in.nextInt();
+            int key = CheckCorrectKey.checking();
             newMusicBands.keySet().removeIf(k -> {
                 if (k == null) {
                     throw new NullPointerException("Key in the map cannot be null");
@@ -30,6 +31,10 @@ public class RemoveGreater extends Command {
                 return k > key;
             });
             musicBands.updateCollection(newMusicBands);
+            System.out.println("Collection after deleting items: ");
+            for (Integer newKey : musicBands.getMusicBands().keySet()){
+                System.out.println("Name: " + musicBands.getMusicBands().get(newKey).getName() + " -> "  + newKey);
+            }
         } catch (InputMismatchException e) {
             System.out.println("The key was entered incorrectly!");
         }

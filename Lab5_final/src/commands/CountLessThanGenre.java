@@ -21,9 +21,28 @@ public class CountLessThanGenre extends Command {
      */
     public void countLessThanGenre() throws NullPointerException {
         try {
+            System.out.println("Choose a genre: " + "\n" +
+                    "-- ROCK" + "\n" +
+                    "-- BLUES" + "\n" +
+                    "-- POP" + "\n" +
+                    "-- POST_ROCK" + "\n" +
+                    "-- BRIT_POP");
             System.out.println("Enter genre: ");
             Scanner in = new Scanner(System.in);
-            String genre = in.nextLine();
+            String genre;
+            while (true){
+                try {
+                    genre = in.nextLine();
+                    if (MusicGenre.convert(genre) != null){
+                        break;
+                    } else {
+                        System.out.println("Genre does not exist.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("The input error must be of type String.");
+                    in.nextLine();
+                }
+            }
             int count = 0;
             if (musicBands == null) {
                 throw new NullPointerException("MusicBands is not initialized.\n" + this.toString());
@@ -36,6 +55,7 @@ public class CountLessThanGenre extends Command {
             System.out.println(count);
         } catch (InputMismatchException e) {
             System.out.println("The genre was entered incorrectly!");
+            countLessThanGenre();
         }
     }
 

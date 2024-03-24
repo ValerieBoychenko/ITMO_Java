@@ -16,10 +16,11 @@ public class RemoveLowerKey extends Command {
      */
     public void removeLowerKey() {
         try {
+            for (Integer key : musicBands.getMusicBands().keySet()){
+                System.out.println("Name: " + musicBands.getMusicBands().get(key).getName() + " -> "  + key);
+            }
             var newMusicBands = musicBands.getMusicBands();
-            System.out.println("Enter key: ");
-            Scanner in = new Scanner(System.in);
-            Integer key = in.nextInt();
+            int key = CheckCorrectKey.checking();
             newMusicBands.keySet().removeIf(k -> {
                 if (k == null) {
                     throw new NullPointerException("Key in the map cannot be null");
@@ -27,6 +28,9 @@ public class RemoveLowerKey extends Command {
                 return k < key;
             });
             musicBands.updateCollection(newMusicBands);
+            for (Integer newKey : musicBands.getMusicBands().keySet()){
+                System.out.println("Name: " + musicBands.getMusicBands().get(newKey).getName() + " -> "  + newKey);
+            }
         } catch (InputMismatchException e) {
             System.out.println("The key was entered incorrectly!");
         }

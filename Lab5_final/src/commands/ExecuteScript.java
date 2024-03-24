@@ -20,9 +20,7 @@ public class ExecuteScript extends Command {
      * Выполняет скрипт из файла, последовательно выполняя команды, содержащиеся в файле.
      */
     public void executeScript() {
-        System.out.println("Enter fileName: ");
-        Scanner in = new Scanner(System.in);
-        String fileName = in.nextLine();
+        String fileName = "/Users/valeriabojcenko/IdeaProjects/Lab5_final/src/input_output_file/scripts.txt";
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String command;
             Parser  parser= new Parser(fileName);

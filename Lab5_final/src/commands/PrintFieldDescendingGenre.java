@@ -1,6 +1,9 @@
 package commands;
 
-import java.util.Date;
+import base_class.MusicBand;
+import base_class.MusicGenre;
+
+import java.util.*;
 
 /**
  * Команда для печати жанров музыкальных групп в порядке убывания.
@@ -11,15 +14,22 @@ public class PrintFieldDescendingGenre extends Command {
      * Если жанр равен null, генерируется исключение NullPointerException.
      */
     public void printFieldDescendingGenre() {
-
         var newMusicBands = musicBands.getMusicBands();
+        List<String> genres = new ArrayList<>();
         newMusicBands.descendingMap().forEach((key, value) -> {
             if (value != null) {
-                System.out.println(value.getGenre());
+                genres.add(value.getGenre().toString());
             } else {
                 throw new NullPointerException("Genre is null for music band. \n" + this.toString());
             }
         });
+
+        genres.sort(Comparator.comparing(String::toString));
+
+        for (String genre : genres) {
+            System.out.println(genre);
+        }
+
         musicBands.updateCollection(newMusicBands);
     }
     /**
