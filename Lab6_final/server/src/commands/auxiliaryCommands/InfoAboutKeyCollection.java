@@ -1,34 +1,27 @@
 package commands.auxiliaryCommands;
 
 import commands.Command;
-import serverModules.ResponseClient;
-
-import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
+import java.util.Date;
 
 
 public class InfoAboutKeyCollection extends Command implements Serializable {
     @Serial
     private static final long serialVersionUID = 17L;
-    public void execute(DatagramSocket serverSocket, DatagramPacket receivePacket){
+    public String execute(){
         String info = "";
         if (musicBands.getMusicBands().isEmpty()){
-            try {
-                new ResponseClient().response("The collection is empty!", serverSocket, receivePacket);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            return "The collection is empty!";
         }
         for (Integer key : musicBands.getMusicBands().keySet()){
             info += "Name: " + musicBands.getMusicBands().get(key).getName() + " -> "  + key + "\n";
         }
-        try {
-            new ResponseClient().response(info, serverSocket, receivePacket);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return info;
+    }
+
+    @Override
+    public String toString(){
+        return "Class name: InfoAboutKeyCollection" + " - / " + new Date().toString() + " /";
     }
 }

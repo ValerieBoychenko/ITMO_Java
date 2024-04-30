@@ -1,24 +1,23 @@
 package commands.auxiliaryCommands;
 
-import serverModules.ResponseClient;
+import modules.Response;
+import modules.ResponseClient;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
+import java.io.Serializable;
 import java.util.InputMismatchException;
-import java.util.Scanner;
 
 import static commands.Command.musicBands;
 
-public class CheckCorrectKey {
-     static public Integer checking(int key, DatagramSocket serverSocket, DatagramPacket receivePacket){
-        while (true){
+public class CheckCorrectKey implements Serializable {
+    static public Integer checking(int key) {
+        while (true) {
             try {
-                if (musicBands.getMusicBands().get(key) != null){
+                if (musicBands.getMusicBands().get(key) != null) {
                     break;
                 } else {
                     System.out.println("Key does not exist.");
-                    new ResponseClient().response("Key does not exist.", serverSocket, receivePacket);
+                    ResponseClient.response(new Response("Key does not exist."));
                     return -1;
                 }
             } catch (InputMismatchException e) {

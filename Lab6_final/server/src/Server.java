@@ -1,19 +1,13 @@
-import base_class.MusicBand;
 import commands.Command;
-import commands.Help;
 import exceptions.ConsoleOutputErrorException;
 import handlers.MusicBandCollection;
-import serverModules.CommandProcessing;
-import serverModules.Connection;
-import serverModules.ReadingRequest;
+import modules.*;
 import workingWithFile.FileReader;
 
 import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.InetAddress;
 import java.util.Map;
-import java.util.Scanner;
 
 public class Server {
 
@@ -25,12 +19,13 @@ public class Server {
             DatagramSocket serverSocket = new Connection().connecting();
             System.out.println("Server started...");
             while (true) {
-                byte[] receiveData = new byte[1024];
+                byte[] receiveData = new byte[2048];
                 DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+                new ResponseClient(serverSocket, receivePacket);
                 byte[] receivedBytes = new ReadingRequest().reading(serverSocket, receivePacket);
                 Command command = new CommandProcessing().processing(receivedBytes);
                 System.out.println("Received command: " + command.toString());
-                command.execute(serverSocket, receivePacket);
+                ResponseClient.response(new Response(command.execute()));
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

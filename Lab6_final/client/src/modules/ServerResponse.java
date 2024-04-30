@@ -1,6 +1,8 @@
-package clientModuls;
+package modules;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -10,7 +12,9 @@ public class ServerResponse implements Serializable {
         byte[] receiveData = new byte[4096];
         DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
         clientSocket.receive(receivePacket);
-        String receivedMessage = new String(receivePacket.getData(), 0, receivePacket.getLength());
-        System.out.println("SERVER: " + "\n" + receivedMessage);
+        ByteArrayInputStream byteStream = new ByteArrayInputStream(receivePacket.getData());
+        ObjectInputStream objectInputStream = new ObjectInputStream(byteStream);
+        Response receivedResponse = (Response) objectInputStream.readObject();
+        System.out.println(receivedResponse.getMessage());
     }
 }

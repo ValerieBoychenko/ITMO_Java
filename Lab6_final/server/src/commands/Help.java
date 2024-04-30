@@ -1,22 +1,17 @@
 package commands;
 
 import exceptions.ConsoleOutputErrorException;
-import serverModules.ResponseClient;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.util.Date;
 
 public class Help extends Command implements Serializable {
     @Serial
     private static final long serialVersionUID = 7L;
 
-    private String mes;
-
     @Override
-    public void execute(DatagramSocket serverSocket, DatagramPacket receivePacket) throws ConsoleOutputErrorException {
+    public String execute() throws ConsoleOutputErrorException {
         try {
             String message = "help - output help for available commands" + "\n" +
                     "info - output information about the collection (type, initialization date, number of items, etc.) to the standard output stream." + "\n" +
@@ -34,7 +29,7 @@ public class Help extends Command implements Serializable {
                     "count_less_than_genre genre - print the number of elements whose genre field value is less than the specified one" + "\n" +
                     "filter_starts_with_name name - print the elements whose name field value starts with the specified substring" + "\n" +
                     "print_field_descending_genre - print the values of the genre field of all elements in descending order";
-            new ResponseClient().response(message, serverSocket, receivePacket);
+            return message;
 
         } catch (Exception e) {
             throw new ConsoleOutputErrorException("Ошибка вывода данных в консоль" + this.toString());
@@ -46,7 +41,4 @@ public class Help extends Command implements Serializable {
         return "Имя класса: Help" + " - / " + new Date().toString() + " /";
     }
 
-    public String getMes() {
-        return mes;
-    }
 }

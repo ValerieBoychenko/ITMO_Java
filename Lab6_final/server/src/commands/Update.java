@@ -1,37 +1,31 @@
 package commands;
 
-import base_class.MusicBand;
-import serverModules.ResponseClient;
+import commands.commandParameters.MusicBandAndKeyParameters;
 
-import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.util.Date;
 import java.util.InputMismatchException;
 
 public class Update extends Command implements Serializable {
     @Serial
     private static final long serialVersionUID = 17L;
-    String key;
 
-    MusicBand musicBand;
-
-    public void execute(DatagramSocket serverSocket, DatagramPacket receivePacket) {
+    public String execute() {
         try {
-            if (musicBand == null) {
+            if (((MusicBandAndKeyParameters) parameter).musicBand() == null) {
                 throw new NullPointerException("newMusicBand is not initialized.\n" + this.toString());
             }
-            if (musicBands.getMusicBands().containsKey(Integer.parseInt(key))) {
-                musicBands.put(Integer.parseInt(key), musicBand);
-                new ResponseClient().response("An element with a key " + key + " successfully updated.", serverSocket, receivePacket);
+            if (musicBands.getMusicBands().containsKey(Integer.parseInt(((MusicBandAndKeyParameters) parameter).key()))) {
+                musicBands.put(Integer.parseInt(((MusicBandAndKeyParameters) parameter).key()), ((MusicBandAndKeyParameters) parameter).musicBand());
+                return "An element with a key " + ((MusicBandAndKeyParameters) parameter).key() + " successfully updated.";
             } else {
-                new ResponseClient().response("An element with a key " + key + " not found in the collection.", serverSocket, receivePacket);
+                return "An element with a key " + ((MusicBandAndKeyParameters) parameter).key() + " not found in the collection.";
             }
-        } catch (InputMismatchException | IOException e) {
+        } catch (InputMismatchException e) {
             System.out.println("The key was entered incorrectly!");
         }
+        return "Command execution error!";
     }
 
     @Override

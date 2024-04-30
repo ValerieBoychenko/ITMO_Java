@@ -1,4 +1,4 @@
-package serverModules;
+package modules;
 
 import java.io.IOException;
 import java.io.Serializable;

@@ -3,15 +3,13 @@ package commands;
 
 import workingWithFile.FileWriter;
 
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.util.Date;
 import java.util.Map;
 
 
-public class Save extends Command {
+public class Save {
 
-    public void execute(DatagramSocket serverSocket, DatagramPacket receivePacket){
+    public void execute(){
         try {
             Map<String, String> env = System.getenv();
             new FileWriter().writing(env.get("FILE_PATH"));

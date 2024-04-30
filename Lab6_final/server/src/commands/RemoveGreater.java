@@ -1,44 +1,38 @@
 package commands;
 
-import base_class.MusicBand;
-import serverModules.ResponseClient;
+import baseClass.MusicBand;
+import commands.commandParameters.StringParameters;
 
-import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class RemoveGreater extends Command implements Serializable {
     @Serial
     private static final long serialVersionUID = 11L;
-    private String key;
 
-    public void execute(DatagramSocket serverSocket, DatagramPacket receivePacket) throws NullPointerException {
+    public String execute() throws NullPointerException {
         String result = "";
         try {
-            for (Integer key : musicBands.getMusicBands().keySet()){
-                System.out.println("Name: " + musicBands.getMusicBands().get(key).getName() + " -> "  + key);
-            }
             TreeMap<Integer, MusicBand> newMusicBands = musicBands.getMusicBands();
             newMusicBands.keySet().removeIf(k -> {
                 if (k == null) {
                     throw new NullPointerException("Key in the map cannot be null");
                 }
-                return k > Integer.parseInt(key);
+                return k > Integer.parseInt(((StringParameters) parameter).parameter());
             });
             musicBands.updateCollection(newMusicBands);
-            System.out.println("Collection after deleting items: ");
-            for (Integer newKey : musicBands.getMusicBands().keySet()){
-               result += "Name: " + musicBands.getMusicBands().get(newKey).getName() + " -> "  + newKey + "\n";
-            }
-            new ResponseClient().response(result, serverSocket, receivePacket);
-        } catch (InputMismatchException | IOException e) {
+            result = newMusicBands.keySet().stream()
+                    .map(newKey -> "Name: " + musicBands.getMusicBands().get(newKey).getName() + " -> " + newKey)
+                    .collect(Collectors.joining("\n"));
+            return result;
+        } catch (InputMismatchException e) {
             System.out.println("The key was entered incorrectly!");
         }
+        return "Command execution error!";
     }
 
     @Override

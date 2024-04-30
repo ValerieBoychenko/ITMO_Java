@@ -1,6 +1,6 @@
 package workingWithFile;
 
-import base_class.MusicBand;
+import baseClass.MusicBand;
 import commands.Command;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

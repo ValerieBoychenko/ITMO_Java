@@ -1,9 +1,9 @@
 package workingWithFile;
 
-import base_class.Coordinates;
-import base_class.Label;
-import base_class.MusicBand;
-import base_class.MusicGenre;
+import baseClass.Coordinates;
+import baseClass.Label;
+import baseClass.MusicBand;
+import baseClass.MusicGenre;
 import commands.Command;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

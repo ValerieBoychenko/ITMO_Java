@@ -1,4 +1,4 @@
-package serverModules;
+package modules;
 
 import commands.Command;
 

@@ -1,23 +1,15 @@
 package commands;
 
-import serverModules.ResponseClient;
-
-import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class PrintFieldDescendingGenre extends Command implements Serializable {
     @Serial
     private static final long serialVersionUID = 10L;
 
-    public void execute(DatagramSocket serverSocket, DatagramPacket receivePacket) {
+    public String execute() {
         String result = musicBands.getMusicBands().values().stream()
                 .map(band -> {
                     if (band.getGenre() == null) {
@@ -28,11 +20,7 @@ public class PrintFieldDescendingGenre extends Command implements Serializable {
                 .sorted()
                 .collect(Collectors.joining("\n"));
         musicBands.updateCollection(musicBands.getMusicBands());
-        try {
-            new ResponseClient().response(result, serverSocket, receivePacket);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return result;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package base_class;
+package baseClass;
 
 import java.io.Serializable;
 

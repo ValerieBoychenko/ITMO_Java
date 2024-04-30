@@ -1,19 +1,16 @@
 package commands;
 
-
-
-import parser.ManualInput;
+import commands.auxiliaryCommands.CommandValidator;
+import commands.commandParameters.TypeParameter;
 
 import java.io.Serial;
+import java.io.Serializable;
 
 
-public class FilterStartsWithName extends Command {
-    String name;
+public class FilterStartsWithName extends Command implements Serializable {
     @Serial
     private static final long serialVersionUID = 6L;
-    public void executeReadParameters(){
-        System.out.println("Enter name: ");
-        this.name = new ManualInput().nextLine();
-    }
+
+    public void executeReadParameters(){parameter = CommandValidator.Validation(TypeParameter.NAME);}
 }
 

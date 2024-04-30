@@ -1,12 +1,8 @@
-import clientModuls.SendCommand;
-import clientModuls.ServerResponse;
+import modules.ClientManager;
+import modules.SendCommand;
+import modules.ServerResponse;
 import commands.*;
-import commands.auxiliaryCommands.InfoAboutKeyCollection;
-import exceptions.ConsoleOutputErrorException;
 import parser.Parser;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -24,48 +20,28 @@ public class Client {
                 Command command = null;
                 do {
                     command = new Parser().start();
-                    if (command instanceof RemoveKey || command instanceof RemoveGreater || command instanceof RemoveLowerKey ||
-                            command instanceof ReplaceIfGreater || command instanceof Update) {
-                        Command commandTwo = new InfoAboutKeyCollection();
-                        new SendCommand().sending(commandTwo, serverAddress, clientSocket, serverPort);
-                        new ServerResponse().response(clientSocket);
-                        command.executeReadParameters();
-                        statusCommand = 2;
-                    }
-                    if (command instanceof ExecuteScript){
-                        String fileName = ((ExecuteScript) command).getFileName();
-                        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-                            String newCommand;
-                            Parser parser = new Parser();
-                            while ((newCommand = br.readLine()) != null) {
-                                Command finalCommand = parser.parsing(newCommand);
-                                finalCommand.executeReadParameters();
-                                new SendCommand().sending(finalCommand, serverAddress, clientSocket, serverPort);
-                                new ServerResponse().response(clientSocket);
-                            }
-                        } catch (IOException | ConsoleOutputErrorException | NullPointerException e) {
-                            e.getMessage();
-                        }
-                        statusCommand = 1;
-                    }
+                    statusCommand = new ClientManager(command).handler(clientSocket, serverAddress, serverPort);
                 } while (command == null);
 
                 if (command instanceof Exit) {
-                    new SendCommand().sending(new Exit(), serverAddress, clientSocket, serverPort);
+                    try {
+                        new SendCommand().sending(new Exit(), serverAddress, clientSocket, serverPort);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                     break;
                 }
                 if (statusCommand == 0) {
                     command.executeReadParameters();
-                    new SendCommand().sending(command, serverAddress, clientSocket, serverPort);
-                    new ServerResponse().response(clientSocket);
-                }
-                if (statusCommand == 2) {
-                    new SendCommand().sending(command, serverAddress, clientSocket, serverPort);
-                    new ServerResponse().response(clientSocket);
+                    try {
+                        new SendCommand().sending(command, serverAddress, clientSocket, serverPort);
+                        new ServerResponse().response(clientSocket);
+                    } catch (IOException | ClassNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
             clientSocket.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         }

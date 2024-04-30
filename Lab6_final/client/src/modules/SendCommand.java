@@ -1,8 +1,6 @@
-package clientModuls;
+package modules;
 
 import commands.Command;
-import commands.Exit;
-import parser.Parser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

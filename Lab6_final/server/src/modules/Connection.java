@@ -1,4 +1,4 @@
-package serverModules;
+package modules;
 
 import java.io.Serializable;
 import java.net.DatagramSocket;
@@ -8,6 +8,6 @@ public class Connection implements Serializable {
     private final int PORT = 9876;
 
     public DatagramSocket connecting() throws SocketException {
-        return new DatagramSocket(9876);
+        return new DatagramSocket(PORT);
     }
 }
