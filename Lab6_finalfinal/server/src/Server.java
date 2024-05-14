@@ -15,33 +15,6 @@ import java.util.Map;
 public class Server {
 
     public static void main(String[] args) {
-//        try {
-//            Command.musicBands = new MusicBandCollection();
-//            Map<String, String> env = System.getenv();
-//            new FileReader().read(env.get("FILE_PATH"));
-//            DatagramSocket serverSocket = new Connection().connecting();
-//            System.out.println("Server started...");
-//            while (true) {
-//                serverSocket.setSoTimeout(60000);
-//                byte[] receiveData = new byte[2048];
-//                DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-//                try {
-//                new ResponseClient(serverSocket, receivePacket);
-//                byte[] receivedBytes = new ReadingRequest().reading(serverSocket, receivePacket);
-//                Command command = new CommandProcessing().processing(receivedBytes);
-//                System.out.println("Received command: " + command.toString());
-//                ResponseClient.response(new Response(command.execute()));
-//                } catch (SocketTimeoutException e) {
-//                    System.out.println("Нет запросов от пользователей. Завершение работы сервера...");
-//                    new Save().execute();
-//                    break;
-//                }
-//            }
-//        } catch (IOException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (ConsoleOutputErrorException e) {
-//            throw new RuntimeException(e);
-//        }
         try {
             Command.musicBands = new MusicBandCollection();
             Map<String, String> env = System.getenv();
