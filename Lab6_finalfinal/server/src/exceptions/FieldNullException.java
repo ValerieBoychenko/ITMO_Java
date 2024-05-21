@@ -3,13 +3,13 @@ package exceptions;
 /**
  * Исключение, возникающее при обнаружении нулевого значения в поле, которое должно содержать данные.
  */
-public class NullException extends Exception {
+public class FieldNullException extends Exception {
     /**
      * Конструктор класса.
      *
      * @param message сообщение об ошибке
      */
-    public NullException(String message) {
+    public FieldNullException(String message) {
         super(message);
     }
     /**

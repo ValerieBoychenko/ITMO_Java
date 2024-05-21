@@ -1,7 +1,6 @@
 package commands;
 
 import commands.auxiliaryCommands.CheckCorrectKey;
-import parameters.ParametersRequest;
 
 import java.io.Serial;
 import java.io.Serializable;

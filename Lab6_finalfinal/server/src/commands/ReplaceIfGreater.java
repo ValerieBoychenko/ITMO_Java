@@ -1,7 +1,6 @@
 package commands;
 
 import models.MusicBand;
-import parameters.ParametersRequest;
 
 
 import java.io.Serial;

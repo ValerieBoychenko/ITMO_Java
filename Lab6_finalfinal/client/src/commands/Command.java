@@ -1,6 +1,6 @@
 package commands;
 
-import parameters.ParametersRequest;
+import parameters.Parameters;
 import parameters.TypeParameter;
 
 import java.io.Serial;
@@ -10,7 +10,7 @@ public abstract class Command implements Serializable {
     @Serial
     private static final long serialVersionUID = 2L;
 
-    protected ParametersRequest parameter;
+    protected Parameters parameter;
     private final TypeParameter typeParameter;
 
     public Command(TypeParameter typeParameter) {
@@ -19,7 +19,7 @@ public abstract class Command implements Serializable {
 
     abstract public void executeReadParameters();
 
-    public void setParameter(ParametersRequest parameter) {
+    public void setParameter(Parameters parameter) {
         this.parameter = parameter;
     }
 

@@ -1,7 +1,6 @@
 package network;
 
 import commands.Command;
-import parameters.ParametersRequest;
 
 import java.io.Serial;
 import java.io.Serializable;

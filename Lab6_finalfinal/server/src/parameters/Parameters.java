@@ -4,18 +4,18 @@ import models.MusicBand;
 
 import java.io.Serializable;
 
-public class ParametersRequest implements Serializable {
+public class Parameters implements Serializable {
     private String parameter;
     private MusicBand musicBand;
 
-    public ParametersRequest(String parameter, MusicBand musicBand){
+    public Parameters(String parameter, MusicBand musicBand){
         this.parameter = parameter;
         this.musicBand = musicBand;
     }
-    public ParametersRequest(String parameter){
+    public Parameters(String parameter){
         this.parameter = parameter;
     }
-    public ParametersRequest(MusicBand musicBand){
+    public Parameters(MusicBand musicBand){
         this.musicBand = musicBand;
     }
 

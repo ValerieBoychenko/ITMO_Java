@@ -2,7 +2,7 @@ package commands;
 
 import exceptions.ConsoleOutputErrorException;
 import collectionHandler.MusicBandCollection;
-import parameters.ParametersRequest;
+import parameters.Parameters;
 
 import java.io.IOException;
 import java.io.Serial;
@@ -13,6 +13,6 @@ public abstract class Command implements Serializable {
     private static final long serialVersionUID = 2L;
 
     static public MusicBandCollection musicBands;
-    protected ParametersRequest parameter;
+    protected Parameters parameter;
     abstract public String execute() throws ConsoleOutputErrorException, IOException;
 }

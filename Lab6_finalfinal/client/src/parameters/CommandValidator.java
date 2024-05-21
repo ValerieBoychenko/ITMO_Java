@@ -6,7 +6,7 @@ import parser.ManualInput;
 import java.util.InputMismatchException;
 
 public class CommandValidator {
-    public static ParametersRequest Validation(TypeParameter typeParameter){
+    public static Parameters Validation(TypeParameter typeParameter){
         if (typeParameter == TypeParameter.KEY){
             return inputKey();
         }
@@ -26,7 +26,7 @@ public class CommandValidator {
     }
 
 
-    private static ParametersRequest inputKey(){
+    private static Parameters inputKey(){
         String key = null;
         int flag = 0;
         while (flag == 0) {
@@ -42,10 +42,10 @@ public class CommandValidator {
             }
 
         }
-        return new ParametersRequest(key);
+        return new Parameters(key);
     }
 
-    private static ParametersRequest inputGenre() {
+    private static Parameters inputGenre() {
         try {
             String genre = null;
             String[] genres = {"POP", "BLUES", "ROCK", "POST_ROCK", "BRIT_POP"};
@@ -77,21 +77,21 @@ public class CommandValidator {
                     break;
                 }
             }
-            return new ParametersRequest(genre);
+            return new Parameters(genre);
         } catch (InputMismatchException e) {
             System.out.println("The genre was entered incorrectly!");
         }
         return null;
     }
 
-    private static ParametersRequest inputName(){
+    private static Parameters inputName(){
         String name = null;
         System.out.println("Enter name: ");
         name = new ManualInput().nextLine();
-        return new ParametersRequest(name);
+        return new Parameters(name);
     }
 
-    private static ParametersRequest inputMusicBand(){
+    private static Parameters inputMusicBand(){
         MusicBand musicBand = null;
         String key = null;
         System.out.println("Enter key: ");
@@ -104,6 +104,6 @@ public class CommandValidator {
             inputMusicBand();
         }
         musicBand = new MusicBand().createNewMusicBand();
-        return new ParametersRequest(key, musicBand);
+        return new Parameters(key, musicBand);
     }
 }

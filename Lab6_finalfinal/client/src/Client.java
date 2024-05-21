@@ -18,7 +18,7 @@ public class Client {
         try {
             System.out.println("Client start!");
             final InetAddress serverAddress = InetAddress.getByName("localhost");
-            final int serverPort = 9877;
+            final int serverPort = 9876;
             while (true) {
                 Command commandWithParameters = null;
                 do {
